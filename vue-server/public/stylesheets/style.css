@@ -6,3 +6,17 @@ body {
 a {
   color: #00B7FF;
 }
+
+
+.red {
+  background-color: red;
+}
+
+.green {
+  background-color: green;
+}
+
+.border {
+  border: blue 1px solid;
+}
+

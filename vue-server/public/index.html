@@ -2,10 +2,192 @@
 <html>
     <head>
     
+    <script src="https://unpkg.com/vue"></script>
+
+     <link rel="stylesheet" type="text/css" href="stylesheets/style.css">
+
     </head>
     <body>
 
-    <h3>{{message}}</h3>
-    <script src="javascripts/build.js" type="text/javascript"></script>
+       <div id = "app"> 
+            
+            <!-- v vind, altid skriv atribut som der skal bindes til -->
+            <p v-bind:title="title"> {{msg}} </p>
+        
+            <p v-if="seen">hidden text</p> <!-- conditions -->
+
+
+            <div v-for="name in names"> <!-- for lykker -->
+
+                <p>{{name}}</p>
+                <input v-bind:value="name"/>
+
+            </div>
+
+            <div>{{clickedName}}</div>
+            <div v-on:click="changeName()">Button</div>
+
+            <p>------obj itteration-------------------------------------------------------------------------------------------------------------------</p>
+
+            <div v-for="(value,key) in nameObjs">
+
+                <p>{{value.name | capitalize}}</p>
+                <input v-model="value.name"/>    
+            </div> 
+
+            <p>------vue components-------------------------------------------------------------------------------------------------------------------</p>
+    
+            <my-item v-bind:names="nameObjs"></my-item>    
+
+
+            <my-item v-bind:names="nameObjs"></my-item>
+
+            <p>------vue templating syntax-------------------------------------------------------------------------------------------------------------------</p>
+
+
+            <div v-html="someHtml"></div>
+
+            <div v-bind:disabled="seen" v-bind:id="elID">some id's</div>
+
+            <h1 v-on:click="clickFunction()">ON CLICK BUTTON</h1>
+
+             <h1 @click="clickFunction()">@ CLICK BUTTON</h1>
+
+            <p>------vue comouted values-------------------------------------------------------------------------------------------------------------------</p>
+
+            <div> {{methodTest('bob')}} </div>
+
+            <!-- computed getters, returns internal data values, can not be called like methods -->
+            <!-- computed values are cashed, only updated when data state they depent on changes -->
+
+            <div> {{testTest}} </div>
+
+            <p>------vue watch test -------------------------------------------------------------------------------------------------------------------</p>
+            
+            <input v-model="title"/>
+
+
+             <p>------vue class templating syntax-------------------------------------------------------------------------------------------------------------------</p>
+
+             <h1 v-bind:class="{red : seen, border : seen}">Class test</h1>
+
+             <p v-bind:class ="[redClass,borderClass]">class list test</p>
+
+             <p>------vue styles templating syntax-------------------------------------------------------------------------------------------------------------------</p>
+
+             <div v-bind:style="{fontSize: '30px' , backgroundColor: 'red' , border:'solid 1px black'}">vue style test</div>
+
+             <div v-bind:style="styleObject" >styles bound by obj</div>
+
+             <div v-bind:style="[styleObject,overwrideStyles]">overwride</div>
+
+       </div>
+
+
+        <script>
+
+        Vue.component('my-item', {
+            template : '<div><div v-for="(value,key) in names">{{value.name}}</div></div>',
+            props : ['names'],
+            created : function(){
+                console.log('1. created');
+            },
+            mounted : function(){
+                console.log('2. mounted');
+            },
+            updated : function(){
+                console.log('updated');
+            },
+            destroyed : function(){
+                console.log('im gone baby');
+            }
+
+        });
+
+
+
+        // VUE INSTANCE -------------------
+
+        var vm = new Vue({
+            el : '#app',
+            data : {
+                msg : 'what up',
+                title : 'loooool',
+                seen : true,
+                names : ['bob','lisa','mike','peter'],
+                longNames : ['bobob shgfjsdhf sjd','sdkjfhsdfjsd'],
+                clickedName : 'Hans',
+                nameObjs : {
+                    first : {
+                        name : 'bob'
+                    },
+                    second : {
+                        name : 'lisa'
+                    },
+                    third : {
+                        name : 'mike'
+                    }
+                },
+                someHtml : '<h1>Whoop</h1>',
+                elID : 'myID',
+                redClass : 'red',
+                borderClass : 'border',
+                styleObject : {
+                    color : 'green',
+                    'font-size' : '45px'
+                },
+                overwrideStyles : {
+                    color : 'red'
+                }
+            },
+            computed : {
+                testTest : function(){
+                    return this.title+ ' is cool';
+                },
+                seenComp : {
+                    get : function(){
+                        return this.seen;
+                    },
+                    set : function(value){
+                        this.seen = value;
+                        console.log(value+'setter called'); 
+                    }
+                },
+                classObj : function(){
+                    return {
+                        red : this.seen,
+                        border : this.seen
+                    }
+                }
+            },
+            methods : {
+                changeName : function(){
+                        vm.clickedName = 'peter';
+                },
+                clickFunction : function(){
+                    console.log('clicked');
+                },
+                methodTest : function(value){
+                    return value+'method test';
+                }
+            },
+            filters : {
+                capitalize : function(value){
+                    return value.toUpperCase();
+                }
+            },
+            watch : {
+                title : function(newVal, old){
+                    setTimeout(function(){
+                        vm.title = 'asynch '+ newVal;
+                    },5000);
+                }
+            }
+        });
+
+        </script>
+
+    
+    
     </body>
 </html>

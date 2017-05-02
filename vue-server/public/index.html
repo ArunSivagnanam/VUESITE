@@ -16,6 +16,31 @@
         
             <p v-if="seen">hidden text</p> <!-- conditions -->
 
+            <p v-if="!show">yes</p>
+            <p v-else>No</p>
+
+            <div v-if="type ==='A'">
+                A
+            </div>
+            <div v-else-if="type ==='B'">
+                B
+            </div>
+            <div v-else>
+                C
+            </div>
+
+             <p>------ reused elements at if - else -------------------------------------------------------------------------------------------------------------------</p>
+
+             <div v-if="showFirstName">
+                firstname
+                <input placeholder="firstname" key="firstname" />
+             </div>
+             <div v-else>
+                lastName
+                  <input placeholder="lastname" key="lastName"  />
+             </div>
+             <button v-on:click="nameFunck()">Change</button>
+
 
             <div v-for="name in names"> <!-- for lykker -->
 
@@ -35,12 +60,17 @@
                 <input v-model="value.name"/>    
             </div> 
 
+            <div>
+                <span v-for="n in 10">{{n}}</span>
+            </div>
+
             <p>------vue components-------------------------------------------------------------------------------------------------------------------</p>
     
             <my-item v-bind:names="nameObjs"></my-item>    
 
-
             <my-item v-bind:names="nameObjs"></my-item>
+
+             <my-item v-for="n in 10" v-bind:key="n" v-bind:names="nameObjs"></my-item>
 
             <p>------vue templating syntax-------------------------------------------------------------------------------------------------------------------</p>
 
@@ -81,6 +111,22 @@
 
              <div v-bind:style="[styleObject,overwrideStyles]">overwride</div>
 
+
+              <p>------vue event syntax -------------------------------------------------------------------------------------------------------------------</p>
+              
+              <button v-on:click.stop="myFunction($event)">Print 10</button>
+
+              <input v-on:keyup.enter="myEnterFunck($event)"></input>
+
+              <div v-on:contextmenu="myEnterFunck($event)">left click me</div>
+
+
+               <p>------vue form syntax syntax -------------------------------------------------------------------------------------------------------------------</p>
+
+               <p>------vue components -------------------------------------------------------------------------------------------------------------------</p>
+
+                <my-parrent name="'farther'" childname="'son'" ></my-parrent>
+
        </div>
 
 
@@ -104,7 +150,50 @@
 
         });
 
+        Vue.component('my-child', {
+            template : '<div><div> child, my name is {{ownname}} </div><button v-on:click="changeName($event)">Change name</button></div>',
+            props : ['name'],
+            data : function(){
+                return {
+                    ownname : this.name
+                }
+            },
+            methods : {
+                changeName : function(event){
 
+                this.ownname = 'doughter';
+                console.log(event);
+                this.$emit('childNameUpdated','doughter');
+                }
+            }
+        });
+
+        Vue.component('my-parrent', {
+            template : '<div><button v-on:click=changeChildName()>Change child</button> i am {{name}} and my child is {{ownChildname}} and here he is <br> <my-child v-on:childNameUpdated="update($event)" v-bind:name="ownChildname"></my-child> </div>',
+            props : ['name','childname'],
+            data : function(){
+                return {
+                    ownChildname : this.childname
+                }
+            },
+            computed : {
+                downName : function(){
+                    return this.ownChildname;
+                }
+            },
+            methods : {
+                changeChildName : function(){
+                    this.ownChildname = 'lol';
+                    
+                },
+                update : function(name){
+                    console.log('child updated');
+                    this.ownChildname = name+Math.random();
+                }
+            }
+        });
+
+    
 
         // VUE INSTANCE -------------------
 
@@ -114,6 +203,7 @@
                 msg : 'what up',
                 title : 'loooool',
                 seen : true,
+                show : true,
                 names : ['bob','lisa','mike','peter'],
                 longNames : ['bobob shgfjsdhf sjd','sdkjfhsdfjsd'],
                 clickedName : 'Hans',
@@ -128,6 +218,7 @@
                         name : 'mike'
                     }
                 },
+                showFirstName : true,
                 someHtml : '<h1>Whoop</h1>',
                 elID : 'myID',
                 redClass : 'red',
@@ -138,7 +229,10 @@
                 },
                 overwrideStyles : {
                     color : 'red'
-                }
+                },
+                type : 'A',
+                father : 'father',
+                son : 'son'
             },
             computed : {
                 testTest : function(){
@@ -169,6 +263,20 @@
                 },
                 methodTest : function(value){
                     return value+'method test';
+                },
+                nameFunck : function(){
+                    this.showFirstName = !this.showFirstName;
+                },
+                myFunction : function(event){
+                    console.log('myFunc called');
+                    for(var i = 0; i<10; i++){
+                        console.log(i);
+                    }
+                    console.log(event);
+                },
+                myEnterFunck : function(event){
+                    
+                    console.log(event);
                 }
             },
             filters : {

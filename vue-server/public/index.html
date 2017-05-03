@@ -125,7 +125,7 @@
 
                <p>------vue components -------------------------------------------------------------------------------------------------------------------</p>
 
-                <my-parrent name="'farther'" childname="'son'" ></my-parrent>
+                <my-parrent></my-parrent>
 
        </div>
 
@@ -151,44 +151,62 @@
         });
 
         Vue.component('my-child', {
-            template : '<div><div> child, my name is {{ownname}} </div><button v-on:click="changeName($event)">Change name</button></div>',
-            props : ['name'],
-            data : function(){
-                return {
-                    ownname : this.name
+            template : `<div>
+                            <div v-bind:style="style" v-on:click="update()">{{localUserInfo.firstname +" " + localUserInfo.lastname}}</div>
+                            <slot>fallback content</slot>
+                        </div>`,
+            props : {
+                userinfo : {
+                    type : Object,
+                    default : function(){
+                        return {firstname : 'Kim',lastname : 'Hansen'};
+                    }
                 }
             },
+            data : function(){
+                return {
+                   style : {
+                       border : 'solid 1px black'
+                   }
+                }
+            },
+            computed : {
+               localUserInfo : function(){
+                   return this.userinfo;
+               }
+            },
             methods : {
-                changeName : function(event){
+                update : function(event){
 
-                this.ownname = 'doughter';
-                console.log(event);
-                this.$emit('childNameUpdated','doughter');
+                    var userObj = {firstname : 'Kim',lastname :'Ulriksen'}
+                    this.$emit('childNameUpdated',userObj);
                 }
             }
         });
 
         Vue.component('my-parrent', {
-            template : '<div><button v-on:click=changeChildName()>Change child</button> i am {{name}} and my child is {{ownChildname}} and here he is <br> <my-child v-on:childNameUpdated="update($event)" v-bind:name="ownChildname"></my-child> </div>',
-            props : ['name','childname'],
+            template : `<div v-bind:style="style"> 
+                            <my-child v-bind:userinfo="userInfo" v-on:childNameUpdated="update($event)">
+                            original content
+                            </my-child> 
+                        </div>`,
+            props : [],
             data : function(){
                 return {
-                    ownChildname : this.childname
-                }
-            },
-            computed : {
-                downName : function(){
-                    return this.ownChildname;
+                    userInfo : {
+                            firstname :'Thomas',
+                            lastname : 'Sivagnanam'
+                    },
+                    style : {
+                        border : 'solid black 1px'
+                    }
                 }
             },
             methods : {
-                changeChildName : function(){
-                    this.ownChildname = 'lol';
-                    
-                },
-                update : function(name){
-                    console.log('child updated');
-                    this.ownChildname = name+Math.random();
+                update : function(userInfoEvent){
+                   
+                    this.userInfo.firstname = userInfoEvent.firstname;
+                    this.userInfo.lastname = userInfoEvent.lastname;
                 }
             }
         });

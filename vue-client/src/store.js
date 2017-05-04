@@ -5,6 +5,7 @@ var store = {
         sharedCount : 30,
         backEndTaskComplete : false
     },
+
     getters : {
         getCountPlusTen : function(state){
             return state.sharedCount + 10;
@@ -15,6 +16,7 @@ var store = {
             }
         }
     },
+
     mutations : {
         increment : function(state){
             state.sharedCount++;
@@ -26,6 +28,7 @@ var store = {
             state.markBackEndCompleted = true;
         }
     },
+    
     actions : {
 
         addNumberFromBackEnd : function(context,payload){

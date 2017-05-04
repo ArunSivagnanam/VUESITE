@@ -1,35 +1,28 @@
 <template>
   <div id="app">
-    <img src="./../assets/logo.png">
-    <h1></h1>
-    <h2>Essential Links</h2>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank">Forum</a></li>
-      <li><a href="https://gitter.im/vuejs/vue" target="_blank">Gitter Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank">Twitter</a></li>
-    </ul>
-    <h2>{{msg + localCount}}</h2>
-    <ul>
-      <li><a href="http://router.vuejs.org/" target="_blank">vue-router</a></li>
-      <li><a href="http://vuex.vuejs.org/" target="_blank">vuex</a></li>
-      <li><a href="http://vue-loader.vuejs.org/" target="_blank">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank">awesome-vue</a></li>
-    </ul>
-
-    <button v-on:click="doSomthing()">Vue state test</button>
-
+      <mobile-menu v-bind:itemlList="menuItems" v-bind:menuOpen="menuOpen" v-on:on-item-clicked="itemUpdated($event)" v-on:on-menu-close="closeMenu()"> </mobile-menu>
+      <main-header v-on:on-menu-clicked="toggleMenu()" ></main-header>
+      <site-container></site-container>
+    <!-- site-container -->
+      <p v-on:click="openMenu()">TEST SPACE </p>
+      <h2>{{msg + localCount}}</h2>
+      <button v-on:click="doSomthing()">Vue state test</button>
   </div>
 </template>
 
 <script>
 
+import MobileMenu from './MobileMenu.vue'
+import MainHeader from './MainHeader.vue'
+import SiteContainer from './SiteContainer.vue'
 
 export default {
   name: 'app',
   data : function() {
     return {
       msg: 'Welcome to Your Vue.js App on the fly wooohp you yeeaper',
+      menuItems : [['Home','About'],['Log out']],
+      menuOpen : false
     }
   },
   computed : {
@@ -47,36 +40,69 @@ export default {
         this.$store.dispatch('addNumberFromBackEnd',20).then(function(){
             console.log('getting task from backend completed');
         });
+      },
+      itemUpdated : function(payload){
+          console.log(payload);
+      },
+      closeMenu : function(){
+        this.menuOpen = false;
+      },
+      openMenu : function(){
+         this.menuOpen = true;
+      },
+      toggleMenu : function(){
+          
+          if(!this.menuOpen){
+            this.openMenu();
+          }else{
+            this.closeMenu();
+          }
       }
+  },
+  components : {
+      'mobile-menu' : MobileMenu,
+      'main-header' : MainHeader,
+      'site-container' : SiteContainer
   }
+
 }
 </script>
+ 
 
-<style scoped>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
 
-h1, h2 {
-  font-weight: normal;
-}
+<!-- Shared style guide -->
+<style>
 
-ul {
-  list-style-type: none;
-  padding: 0;
-}
+  body {
+    background-color: #fefdfb;
+    overflow-x: hidden;
+  }
 
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
+  body, div, table, tbody, thead, tfoot, td, th, span, ul, ul li, ol, ol li, em, header, hgroup, nav, footer, aside, article, section, video, audio, strong, b, i, fieldset, form, label, legend, input, button, select, textarea, dt, dl, dd, blockquote, small, code, object, iframe, address, small, caption, img, hr, h1, h2, h3, h4, h5, h6, p {
+      margin: 0px;
+      padding: 0px;
+      vertical-align: top;
+      list-style-type: none;
+      border: 0px solid #ffffff;
+      border-collapse: collapse;
+      border-spacing: 0;
+      font-family: Arial;
+      font-size: 15px;
+      line-height: 20px;
+      color: #5f306a;
+      text-align: left;
+  }
 
 a {
-  color: #42b983;
+    color: #5f306a;
+    text-decoration: underline;
+    outline: none;
 }
+
+div, header, footer, .box, input, textarea {
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+}
+  
 </style>

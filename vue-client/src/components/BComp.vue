@@ -3,11 +3,8 @@
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 
 <template>
-  <div class="site-wrapper">
-    <router-view>
-          
-    </router-view>
-
+  <div>
+    Im B
   </div>
 </template>
 
@@ -15,19 +12,17 @@
 
 <script>
 
-
 export default {
 
-    name : 'site-container',
-
+    name : 'b-comp',
 
     props : {
-        
+       
     },
 
     data : function(){
         return {
-           
+          
         };
     },
 
@@ -37,23 +32,9 @@ export default {
 
     methods : {
 
-    },
-    components : {
-        
+       
     }
 }
 </script>
 
 <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-
-<style scoped>
-
-.site-wrapper {
-    float: left;
-    position: relative;
-    width: 100%;
-    left: 0px;
-    margin: 0px;
-}
-
-</style>

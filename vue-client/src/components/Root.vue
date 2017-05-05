@@ -38,7 +38,7 @@ export default {
       doSomthing : function(){
         console.log('what up with you?');
         this.$store.dispatch('addNumberFromBackEnd',20).then(function(){
-            console.log('getting task from backend completed');
+           
         });
       },
       itemUpdated : function(payload){

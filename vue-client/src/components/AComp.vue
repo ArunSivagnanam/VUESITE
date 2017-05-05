@@ -32,6 +32,9 @@ export default {
 
     methods : {
 
+      test : function(a,b){
+        return a+b;
+      }
        
     }
 }

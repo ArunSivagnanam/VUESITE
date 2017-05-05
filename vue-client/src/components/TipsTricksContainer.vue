@@ -4,7 +4,7 @@
 
 <template>
   <div>
-    Im B
+    Im tips trick container
   </div>
 </template>
 
@@ -14,7 +14,7 @@
 
 export default {
 
-    name : 'b-comp',
+    name : 'tips-tricks',
 
     props : {
        
@@ -38,3 +38,13 @@ export default {
 </script>
 
 <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+<style scoped>
+
+div {
+  background-color: red;
+  width: 500px;
+  height: 500px,
+}
+
+</style>

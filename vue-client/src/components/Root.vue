@@ -1,6 +1,6 @@
 <template>
   <div id="root">
-      <mobile-menu v-bind:itemlList="menuItems" v-bind:menuOpen="menuOpen" v-on:on-item-clicked="itemUpdated($event)" v-on:on-menu-close="closeMenu()"> </mobile-menu>
+      <mobile-menu v-bind:itemList="menuItems" v-bind:menuOpen="menuOpen" v-on:on-item-clicked="itemClicked($event)" v-on:on-menu-close="closeMenu()"> </mobile-menu>
       <main-header v-on:on-menu-clicked="toggleMenu()" ></main-header>
       <site-container></site-container>
     <!-- site-container -->
@@ -21,7 +21,7 @@ export default {
   data : function() {
     return {
       msg: 'Welcome to Your Vue.js App on the fly wooohp you yeeaper',
-      menuItems : [['Home','About'],['Log out']],
+      menuItems : [['Buketter','Anledninger','Hvad er flowr?','Tips & Tricks','Kundeservice','Mit flowr'],['Log ind']],
       menuOpen : false
     }
   },
@@ -41,8 +41,10 @@ export default {
            
         });
       },
-      itemUpdated : function(payload){
-          console.log(payload);
+      itemClicked : function(payload){
+
+          var itemName = payload.value;
+          this.$router.push({ name: itemName, params: { }});
       },
       closeMenu : function(){
         this.menuOpen = false;

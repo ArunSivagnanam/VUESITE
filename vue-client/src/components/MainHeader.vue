@@ -6,7 +6,7 @@
     <div class="wrapper header nav-down">
         <div v-on:click="toggleMenu()" class="opacity mobile-icon"></div>
         <div class="wrapper logo">
-            <a href="/"><img src="https://flowr.dk/skin/frontend/flowr/default/images/logo.png"></a>
+            <a href="/"><img src="./../assets/logo.png"></a>
         </div>
     <div class="wrapper login"><a href="/customer/account/login/">Log ind</a></div></div>
 </template>
@@ -74,7 +74,7 @@ a {
     width: 34px;
     height: 23px;
     margin: 34px 0px 0px 30px;
-    background-image: url(https://flowr.dk/skin/frontend/flowr/default/images/icon_mobile_menu.png);
+    background-image: url('./../assets/icon_mobile_menu.png');
     background-repeat: no-repeat;
     background-position: 0px 0px;
     cursor: hand;
@@ -104,7 +104,7 @@ a {
     width: 100%;
     height: 46px;
     padding: 35px 0px 0px 0px;
-    background-image: url(https://flowr.dk/skin/frontend/flowr/default/images/icon_login.png);
+    background-image: url('./../assets/icon_login.png');
     background-repeat: no-repeat;
     background-position: center 0px;
     color: #5f306a;

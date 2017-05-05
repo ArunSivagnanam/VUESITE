@@ -3,11 +3,8 @@
 <!-- ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ -->
 
 <template>
-  <div class="site-wrapper">
-        <router-view>               
-        </router-view>
-
-
+  <div>
+    Im kunde service container
   </div>
 </template>
 
@@ -15,19 +12,17 @@
 
 <script>
 
-
 export default {
 
-    name : 'site-container',
-
+    name : 'kunde-service-container',
 
     props : {
-        
+       
     },
 
     data : function(){
         return {
-           
+          
         };
     },
 
@@ -37,9 +32,7 @@ export default {
 
     methods : {
 
-    },
-    components : {
-        
+       
     }
 }
 </script>
@@ -48,5 +41,10 @@ export default {
 
 <style scoped>
 
+div {
+  background-color: red;
+  width: 500px;
+  height: 500px,
+}
 
 </style>

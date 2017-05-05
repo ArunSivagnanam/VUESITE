@@ -36,7 +36,7 @@ export default {
 
     data : function(){
         return {
-            msg : 'woohoo im a component'
+            msg : 'used in unitTest for leaning purpose'
         };
     },
 

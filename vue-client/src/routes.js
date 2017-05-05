@@ -1,11 +1,13 @@
 
 import Root from './components/Root.vue';
 import BuketterContainer from './components/BuketterContainer.vue';
-import AnledningerContainer from './components/AnledningerContainer.vue';
-import HvadErFlowrContainer from './components/HvadErFlowrContainer.vue';
-import TipsTricksContainer from './components/TipsTricksContainer.vue';
-import KundeServiceContainer from './components/KundeServiceContainer.vue';
-import MitFlowrContainer from './components/MitFlowrContainer.vue';
+
+// Lazy (asynch) loaded modules, to minimize first load bundle size
+const AnledningerContainer = function(resolve) { require(['./components/AnledningerContainer.vue'], resolve); } 
+const HvadErFlowrContainer = function(resolve){ require(['./components/HvadErFlowrContainer.vue'], resolve); }
+const TipsTricksContainer = function(resolve){ require(['./components/TipsTricksContainer.vue'], resolve); }
+const MitFlowrContainer = function(resolve){ require(['./components/MitFlowrContainer.vue'], resolve); }
+const KundeServiceContainer = function(resolve){ require(['./components/KundeServiceContainer.vue'], resolve); }
 
 const routes = [
   { path: '/', 
